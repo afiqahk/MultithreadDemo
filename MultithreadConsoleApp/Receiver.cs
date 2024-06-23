@@ -9,7 +9,7 @@ namespace MultithreadConsoleApp
     internal class Receiver
     {
         private readonly Utils.ExitCallback _exitCallback;
-
+        private readonly string _name = "receiver";
         internal Receiver(
             Utils.ExitCallback exitCallback
             )
@@ -18,17 +18,17 @@ namespace MultithreadConsoleApp
         }
         internal void RunReceiver(object? obj)
         {
-            Console.WriteLine("[receiver] Thread started...");
+            Console.WriteLine($"[{_name}] Thread started...");
             if (obj is null)
             {
-                _exitCallback("receiver", false, "ct is null");
+                _exitCallback(_name, false, "ct is null");
                 return;
             }
             var ct = (CancellationToken)obj;
             while (!ct.IsCancellationRequested)
             {
             }
-            _exitCallback("receiver", true, null);
+            _exitCallback(_name, true, null);
             return;
         }
     }

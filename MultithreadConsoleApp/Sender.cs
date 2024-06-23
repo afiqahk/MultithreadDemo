@@ -9,6 +9,8 @@ namespace MultithreadConsoleApp
     internal class Sender
     {
         private readonly Utils.ExitCallback _exitCallback;
+        private readonly string _name = "sender";
+
         internal Sender(
             Utils.ExitCallback exitCallback
             )
@@ -17,10 +19,10 @@ namespace MultithreadConsoleApp
         }
         internal void RunSender(object? obj)
         {
-            Console.WriteLine("[sender] Thread started...");
+            Console.WriteLine($"[{_name}] Thread started...");
             if (obj is null)
             {
-                _exitCallback("sender", false, "ct is null");
+                _exitCallback(_name, false, "ct is null");
                 return;
             }
 
@@ -28,11 +30,11 @@ namespace MultithreadConsoleApp
             int i = 0;
             while(!ct.IsCancellationRequested)
             {
-                Console.WriteLine($"[sender] i={i}");
+                Console.WriteLine($"[{_name}] i={i}");
                 i++;
                 Thread.Sleep(2000);
             }
-            _exitCallback("sender", true, null);
+            _exitCallback(_name, true, null);
             return;
         }
     }

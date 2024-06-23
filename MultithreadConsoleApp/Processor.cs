@@ -9,6 +9,7 @@ namespace MultithreadConsoleApp
     internal class Processor
     {
         private readonly Utils.ExitCallback _exitCallback;
+        private readonly string _name = "processor";
 
         internal Processor(
             Utils.ExitCallback exitCallback
@@ -18,17 +19,17 @@ namespace MultithreadConsoleApp
         }
         internal void RunProcessor(object? obj)
         {
-            Console.WriteLine("[processor] Thread started...");
+            Console.WriteLine($"[{_name}] Thread started...");
             if (obj is null)
             {
-                _exitCallback("processor", false, "ct is null");
+                _exitCallback(_name, false, "ct is null");
                 return;
             }
             var ct = (CancellationToken)obj;
             while (!ct.IsCancellationRequested)
             {
             }
-            _exitCallback("processor", true, null);
+            _exitCallback(_name, true, null);
             return;
         }
     }
