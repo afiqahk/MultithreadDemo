@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultithreadConsoleApp.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,20 @@ namespace MultithreadConsoleApp.Classes
         {
             Name = name;
             ExitCallback = exitCallback;
+        }
+        public bool OnStarted(object? obj)
+        {
+            Console.WriteLine($"[{Name}] Thread started...");
+            if (this is ICancellable cancellableObj)
+            {
+                if (obj is null)
+                {
+                    ExitFail("ct is null");
+                    return false;
+                }
+                cancellableObj.Token = (CancellationToken)obj;
+            }
+            return true;
         }
         public void ExitFail(string message)
         {

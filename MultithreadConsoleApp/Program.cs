@@ -15,13 +15,13 @@ Receiver receiver = new Receiver(Utils.LogExitStatus);
 Processor processor = new Processor(Utils.LogExitStatus);
 
 Thread controllerCaller = new Thread(
-    new ThreadStart(controller.RunController));
+    new ThreadStart(controller.Run));
 Thread senderCaller = new Thread(
-    new ParameterizedThreadStart(sender.RunSender));
+    new ParameterizedThreadStart(sender.Run));
 Thread receiverCaller = new Thread(
-    new ParameterizedThreadStart(receiver.RunReceiver));
+    new ParameterizedThreadStart(receiver.Run));
 Thread processorCaller = new Thread(
-    new ParameterizedThreadStart(processor.RunProcessor));
+    new ParameterizedThreadStart(processor.Run));
 
 controllerCaller.Start();
 processorCaller.Start(cts.Token);

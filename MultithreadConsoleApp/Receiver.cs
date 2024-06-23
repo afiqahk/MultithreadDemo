@@ -1,4 +1,5 @@
 ﻿using MultithreadConsoleApp.Classes;
+using MultithreadConsoleApp.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,22 +8,17 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal class Receiver : ThreadManaged
+    internal class Receiver : ThreadManaged, ICancellable
     {
+        public CancellationToken Token { get; set; }
         public Receiver(
             Utils.ExitCallback exitCallback
             ) : base("receiver", exitCallback)
         { }
-        internal void RunReceiver(object? obj)
+        public void Run(object? obj)
         {
-            Console.WriteLine($"[{Name}] Thread started...");
-            if (obj is null)
-            {
-                ExitFail("ct is null");
-                return;
-            }
-            var ct = (CancellationToken)obj;
-            while (!ct.IsCancellationRequested)
+            if (!OnStarted(obj)) return;
+            while (!Token.IsCancellationRequested)
             {
             }
             ExitSuccess();

@@ -18,9 +18,9 @@ namespace MultithreadConsoleApp
         {
             _cancellationTokenSource = cancellationTokenSource;
         }
-        internal void RunController()
+        internal void Run()
         {
-            Console.WriteLine($"[{Name}] Thread started...");
+            if (!OnStarted(null)) return;
             Console.WriteLine($"[{Name}] Press 'C' to terminate the application...");
             while(true)
             {
