@@ -8,7 +8,7 @@ namespace MultithreadConsoleApp
 {
     internal class Sender
     {
-        private Utils.ExitCallback _exitCallback;
+        private readonly Utils.ExitCallback _exitCallback;
         internal Sender(
             Utils.ExitCallback exitCallback
             )

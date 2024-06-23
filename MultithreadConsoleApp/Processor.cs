@@ -6,13 +6,30 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal static class Processor
+    internal class Processor
     {
-        internal static void RunProcessor()
+        private readonly Utils.ExitCallback _exitCallback;
+
+        internal Processor(
+            Utils.ExitCallback exitCallback
+            )
         {
-            Console.WriteLine("Processor started...");
-            Thread.Sleep(1000);
-            Console.WriteLine("Processor exiting...");
+            _exitCallback = exitCallback;
+        }
+        internal void RunProcessor(object? obj)
+        {
+            Console.WriteLine("[processor] Thread started...");
+            if (obj is null)
+            {
+                _exitCallback("processor", false, "ct is null");
+                return;
+            }
+            var ct = (CancellationToken)obj;
+            while (!ct.IsCancellationRequested)
+            {
+            }
+            _exitCallback("processor", true, null);
+            return;
         }
     }
 }

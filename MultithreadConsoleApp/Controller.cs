@@ -9,12 +9,15 @@ namespace MultithreadConsoleApp
     internal class Controller
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly Utils.ExitCallback _exitCallback;
 
         public Controller(
-            CancellationTokenSource cancellationTokenSource
+            CancellationTokenSource cancellationTokenSource,
+            Utils.ExitCallback exitCallback
             )
         {
             _cancellationTokenSource = cancellationTokenSource;
+            _exitCallback = exitCallback;
         }
         internal void RunController()
         {
@@ -24,11 +27,13 @@ namespace MultithreadConsoleApp
             {
                 if (Console.ReadKey(true).KeyChar.ToString().ToUpperInvariant() == "C")
                 {
+                    Console.WriteLine("[controller] 'C' pressed. Terminating application...");
                     _cancellationTokenSource.Cancel();
                     break;
                 }
             }
-            Console.WriteLine("[controller] Thread exiting...");
+            _exitCallback("controller", true, null);
+            return;
         }
     }
 }
