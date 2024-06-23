@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp.Interfaces
 {
-    internal interface ICancellable
+    public interface ICancellable
     {
         public CancellationToken Token { get; set; }
         void Run(object? obj);

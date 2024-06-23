@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal class Receiver : ThreadManaged, ICancellable
+    public class Receiver : ThreadManaged, ICancellable
     {
         public CancellationToken Token { get; set; }
         public Receiver(

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal class Controller : ThreadManaged
+    public class Controller : ThreadManaged
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
 
@@ -18,7 +18,7 @@ namespace MultithreadConsoleApp
         {
             _cancellationTokenSource = cancellationTokenSource;
         }
-        internal void Run()
+        public void Run()
         {
             if (!OnStarted(null)) return;
             Console.WriteLine($"[{Name}] Press 'C' to terminate the application...");

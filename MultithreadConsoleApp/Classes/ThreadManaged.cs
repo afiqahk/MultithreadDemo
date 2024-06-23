@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace MultithreadConsoleApp.Classes
 {
-    internal abstract class ThreadManaged
+    public abstract class ThreadManaged
     {
         public string Name { get; }
         public Utils.ExitCallback ExitCallback { get; }
