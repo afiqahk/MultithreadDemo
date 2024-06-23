@@ -6,13 +6,29 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal static class Controller
+    internal class Controller
     {
-        internal static void RunController()
+        private readonly CancellationTokenSource _cancellationTokenSource;
+
+        public Controller(
+            CancellationTokenSource cancellationTokenSource
+            )
         {
-            Console.WriteLine("Controller started...");
-            Thread.Sleep(1000);
-            Console.WriteLine("Controller exiting...");
+            _cancellationTokenSource = cancellationTokenSource;
+        }
+        internal void RunController()
+        {
+            Console.WriteLine("[controller] Thread started...");
+            Console.WriteLine("[controller] Press 'C' to terminate the application...");
+            while(true)
+            {
+                if (Console.ReadKey(true).KeyChar.ToString().ToUpperInvariant() == "C")
+                {
+                    _cancellationTokenSource.Cancel();
+                    break;
+                }
+            }
+            Console.WriteLine("[controller] Thread exiting...");
         }
     }
 }

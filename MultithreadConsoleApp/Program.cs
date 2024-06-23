@@ -8,10 +8,12 @@ Console.WriteLine("Hello, World!");
 ConcurrentQueue<int> qInput = new();
 ConcurrentQueue<int> qOutput = new();
 CancellationTokenSource cts = new CancellationTokenSource();
+
+Controller controller = new Controller(cts);
 Sender sender = new Sender(Utils.LogExitStatus);
 
 Thread controllerCaller = new Thread(
-    new ThreadStart(Controller.RunController));
+    new ThreadStart(controller.RunController));
 Thread senderCaller = new Thread(
     new ParameterizedThreadStart(sender.RunSender));
 Thread receiverCaller = new Thread(
@@ -22,8 +24,9 @@ Thread processorCaller = new Thread(
 controllerCaller.Start();
 processorCaller.Start();
 receiverCaller.Start();
-senderCaller.Start(null);
+senderCaller.Start(cts.Token);
 
 controllerCaller.Join();
 
+cts.Dispose();
 Console.WriteLine("Bye, World!");
