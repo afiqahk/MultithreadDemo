@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal static class Controller
+    internal static class Processor
     {
-        internal static void RunController()
+        internal static void RunProcessor()
         {
-            Console.WriteLine("Controller started...");
+            Console.WriteLine("Processor started...");
             Thread.Sleep(1000);
-            Console.WriteLine("Controller exiting...");
+            Console.WriteLine("Processor exiting...");
         }
     }
 }

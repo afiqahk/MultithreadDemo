@@ -8,7 +8,11 @@ namespace MultithreadConsoleApp
 {
     internal static class Receiver
     {
-        internal static void RunReceiver() 
-        { }
+        internal static void RunReceiver()
+        {
+            Console.WriteLine("Receiver started...");
+            Thread.Sleep(1000);
+            Console.WriteLine("Receiver exiting...");
+        }
     }
 }

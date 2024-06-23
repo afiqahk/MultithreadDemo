@@ -10,7 +10,9 @@ namespace MultithreadConsoleApp
     {
         internal static void RunSender()
         {
-
+            Console.WriteLine("Sender started...");
+            Thread.Sleep(1000);
+            Console.WriteLine("Sender exiting...");
         }
     }
 }
