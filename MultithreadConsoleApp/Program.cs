@@ -3,25 +3,27 @@ using MultithreadConsoleApp;
 using SkiaSharp;
 using System.Collections.Concurrent;
 
+Console.WriteLine("Hello, World!");
+
 ConcurrentQueue<int> qInput = new();
 ConcurrentQueue<int> qOutput = new();
-
-Console.WriteLine("Hello, World!");
+CancellationTokenSource cts = new CancellationTokenSource();
+Sender sender = new Sender(Utils.LogExitStatus);
 
 Thread controllerCaller = new Thread(
     new ThreadStart(Controller.RunController));
 Thread senderCaller = new Thread(
-    new ThreadStart(Sender.RunSender));
+    new ParameterizedThreadStart(sender.RunSender));
 Thread receiverCaller = new Thread(
     new ThreadStart(Receiver.RunReceiver));
 Thread processorCaller = new Thread(
     new ThreadStart(Receiver.RunReceiver));
 
-
 controllerCaller.Start();
-controllerCaller.Join();
 processorCaller.Start();
 receiverCaller.Start();
-senderCaller.Start();
+senderCaller.Start(null);
+
+controllerCaller.Join();
 
 Console.WriteLine("Bye, World!");
