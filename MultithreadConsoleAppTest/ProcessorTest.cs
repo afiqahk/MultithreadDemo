@@ -3,11 +3,11 @@ using MultithreadConsoleApp.Classes;
 
 namespace MultithreadConsoleAppTest
 {
-    public class SenderTest : ThreadManagedICancellableTest
+    public class ProcessorTest : ThreadManagedICancellableTest
     {
         public override ThreadManaged CreateInstance()
         {
-            return new Sender(Utils.LogExitStatus);
+            return new Processor(Utils.LogExitStatus);
         }
     }
 }
