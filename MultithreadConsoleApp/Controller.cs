@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultithreadConsoleApp.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,34 +7,31 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal class Controller
+    internal class Controller : ThreadManaged
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly Utils.ExitCallback _exitCallback;
-        private readonly string _name = "controller";
 
         public Controller(
             CancellationTokenSource cancellationTokenSource,
             Utils.ExitCallback exitCallback
-            )
+            ) : base("controller", exitCallback)
         {
             _cancellationTokenSource = cancellationTokenSource;
-            _exitCallback = exitCallback;
         }
         internal void RunController()
         {
-            Console.WriteLine($"[{_name}] Thread started...");
-            Console.WriteLine($"[{_name}] Press 'C' to terminate the application...");
+            Console.WriteLine($"[{Name}] Thread started...");
+            Console.WriteLine($"[{Name}] Press 'C' to terminate the application...");
             while(true)
             {
                 if (Console.ReadKey(true).KeyChar.ToString().ToUpperInvariant() == "C")
                 {
-                    Console.WriteLine($"[{_name}] 'C' pressed. Terminating application...");
+                    Console.WriteLine($"[{Name}] 'C' pressed. Terminating application...");
                     _cancellationTokenSource.Cancel();
                     break;
                 }
             }
-            _exitCallback(_name, true, null);
+            ExitSuccess();
             return;
         }
     }

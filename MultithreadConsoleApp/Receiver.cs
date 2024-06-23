@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultithreadConsoleApp.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,29 +7,25 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal class Receiver
+    internal class Receiver : ThreadManaged
     {
-        private readonly Utils.ExitCallback _exitCallback;
-        private readonly string _name = "receiver";
-        internal Receiver(
+        public Receiver(
             Utils.ExitCallback exitCallback
-            )
-        {
-            _exitCallback = exitCallback;
-        }
+            ) : base("receiver", exitCallback)
+        { }
         internal void RunReceiver(object? obj)
         {
-            Console.WriteLine($"[{_name}] Thread started...");
+            Console.WriteLine($"[{Name}] Thread started...");
             if (obj is null)
             {
-                _exitCallback(_name, false, "ct is null");
+                ExitFail("ct is null");
                 return;
             }
             var ct = (CancellationToken)obj;
             while (!ct.IsCancellationRequested)
             {
             }
-            _exitCallback(_name, true, null);
+            ExitSuccess();
             return;
         }
     }

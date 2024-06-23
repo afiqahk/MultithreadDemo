@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultithreadConsoleApp.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,30 +7,25 @@ using System.Threading.Tasks;
 
 namespace MultithreadConsoleApp
 {
-    internal class Processor
+    internal class Processor : ThreadManaged
     {
-        private readonly Utils.ExitCallback _exitCallback;
-        private readonly string _name = "processor";
-
-        internal Processor(
+        public Processor(
             Utils.ExitCallback exitCallback
-            )
-        {
-            _exitCallback = exitCallback;
-        }
+            ) : base("processor", exitCallback)
+        { }
         internal void RunProcessor(object? obj)
         {
-            Console.WriteLine($"[{_name}] Thread started...");
+            Console.WriteLine($"[{Name}] Thread started...");
             if (obj is null)
             {
-                _exitCallback(_name, false, "ct is null");
+                ExitFail("ct is null");
                 return;
             }
             var ct = (CancellationToken)obj;
             while (!ct.IsCancellationRequested)
             {
             }
-            _exitCallback(_name, true, null);
+            ExitSuccess();
             return;
         }
     }
