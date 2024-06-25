@@ -1,6 +1,7 @@
 ﻿using MultithreadConsoleApp.Classes;
 using MultithreadConsoleApp.Interfaces;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace MultithreadConsoleApp
             }
             ExitSuccess();
             return;
+        }
+        public void ReceiveData<T>(ConcurrentQueue<T> queue, Utils.ReceiverDelegate<T> receiver)
+        {
+            var item = receiver();
+            queue.Enqueue(item);
         }
     }
 }

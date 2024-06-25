@@ -18,5 +18,11 @@ namespace MultithreadConsoleApp
             }
             Console.WriteLine(logOutput);
         }
+        public delegate T ReceiverDelegate<T>(); 
+        public static int GetInt()
+        {
+            int i = 0;
+            return i++;
+        }
     }
 }
